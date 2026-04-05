@@ -161,6 +161,10 @@ class HomepageApp {
                         await api.updateCard(movedCardId, { grid_col: col, grid_row: row });
                         Components.showToast('Card moved to (' + col + ',' + row + ')');
                     } catch (err) { Components.showToast('Failed: ' + err.message, 'error'); }
+
+                    /* Also update the swapped card if it moved */
+                    /* re-render to reflect changes */
+                    this.renderCards();
                 }
 
                 if (d.ghost.parentNode) d.ghost.parentNode.removeChild(d.ghost);
