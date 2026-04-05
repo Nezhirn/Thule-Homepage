@@ -1,6 +1,7 @@
 # Homepage — Персональная стартовая страница
 
-Настраиваемая домашняя страница с карточной сеткой, поиском, фоновыми изображениями и эстетикой Gnome 42.
+![Описание картинки](https://lh3.googleusercontent.com/d/1mY7msiW8Zi9PQux-jC-hxruk8b1u-WlD)
+**Настраиваемая домашняя страница с карточной сеткой, поиском, фоновыми изображениями и эстетикой Gnome 42.**
 
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?logo=fastapi)
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python)
