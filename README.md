@@ -6,6 +6,7 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?logo=fastapi)
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python)
 ![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite)
+![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
 ## Возможности
@@ -26,21 +27,51 @@
 
 ## Быстрый старт
 
-### 1. Установка зависимостей
+### Docker (рекомендуемый способ)
+
+```bash
+docker run -d -p 8000:8000 thuleseeker/thule:latest
+```
+
+Откройте [http://localhost:8000](http://localhost:8000).
+
+Для сохранения данных между перезапусками используйте volume:
+
+```bash
+docker run -d -p 8000:8000 -v thule-data:/app/backend thuleseeker/thule:latest
+```
+
+#### Docker Compose
+
+**Development:**
+
+```bash
+docker compose up -d --build
+```
+
+**Production:**
+
+```bash
+docker compose -f docker-compose.prod.yml up -d
+```
+
+### Ручная установка
+
+#### 1. Установка зависимостей
 
 ```bash
 cd backend
 pip install -r requirements.txt
 ```
 
-### 2. Запуск сервера
+#### 2. Запуск сервера
 
 ```bash
 cd backend
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-### 3. Открыть в браузере
+#### 3. Открыть в браузере
 
 Перейдите по адресу **[http://localhost:8000](http://localhost:8000)**
 
@@ -202,7 +233,33 @@ homepage/
 
 ## Развёртывание
 
-Для production-развёртывания рекомендуется:
+### Production Docker Compose
+
+```bash
+docker compose -f docker-compose.prod.yml up -d
+```
+
+Это запустит:
+- Контейнер с приложением на порту `8000`
+- Volume `thule-data` для хранения БД и загруженных файлов
+- Health-check для мониторинга доступности
+- Ограничение ресурсов (512MB RAM, 0.5 CPU)
+
+### С reverse proxy (Caddy + TLS)
+
+Раскомментируйте секцию `caddy` в `docker-compose.prod.yml` и создайте `Caddyfile`:
+
+```
+your-domain.com {
+    reverse_proxy homepage:8000
+}
+```
+
+```bash
+docker compose -f docker-compose.prod.yml up -d
+```
+
+### Ручной запуск
 
 ```bash
 # Запуск с uvicorn
@@ -213,6 +270,16 @@ gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker
 ```
 
 Рекомендуется добавить reverse proxy (nginx/caddy) для TLS и кэширования статики.
+
+### Docker Hub
+
+Образ доступен по адресу: [thuleseeker/thule](https://hub.docker.com/r/thuleseeker/thule)
+
+```bash
+docker pull thuleseeker/thule:latest
+```
+
+Теги: `latest`, `1.0.0`
 
 ## Лицензия
 
