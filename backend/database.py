@@ -2,7 +2,7 @@
 import sqlite3
 import os
 
-DATABASE_PATH = os.path.join(os.path.dirname(__file__), "homepage.db")
+DATABASE_PATH = os.environ.get("DATABASE_PATH", os.path.join(os.path.dirname(__file__), "homepage.db"))
 
 
 def get_db_connection():

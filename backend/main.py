@@ -22,7 +22,7 @@ from database import get_db_connection, init_db
 
 # ==================== Config ====================
 
-UPLOADS_DIR = os.path.join(os.path.dirname(__file__), "uploads")
+UPLOADS_DIR = os.environ.get("UPLOADS_DIR", os.path.join(os.path.dirname(__file__), "uploads"))
 FRONTEND_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
 ALLOWED_CONTENT_TYPES = {"image/jpeg", "image/png", "image/gif", "image/webp", "image/svg+xml"}

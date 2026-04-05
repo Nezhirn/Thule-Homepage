@@ -1,7 +1,7 @@
 # =========================
 # Production Dockerfile
 # =========================
-FROM python:3.11-slim AS production
+FROM python:3.14-slim AS production
 
 # Metadata
 LABEL maintainer="thuleseeker"
@@ -12,7 +12,9 @@ LABEL version="1.0.0"
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PORT=8000 \
-    PYTHONPATH=/app/backend
+    PYTHONPATH=/app/backend \
+    UPLOADS_DIR=/app/data/uploads \
+    DATABASE_PATH=/app/data/homepage.db
 
 # Working directory
 WORKDIR /app
@@ -27,8 +29,8 @@ COPY backend/ ./backend/
 # Copy frontend code
 COPY frontend/ ./frontend/
 
-# Create necessary directories
-RUN mkdir -p /app/backend/uploads
+# Create necessary directories for persistent data
+RUN mkdir -p /app/data/uploads
 
 # Expose port
 EXPOSE 8000
